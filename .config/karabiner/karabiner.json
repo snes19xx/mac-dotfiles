@@ -1,0 +1,96 @@
+{
+  "global": { "show_in_menu_bar": true },
+  "profiles": [
+    {
+      "name": "Default profile",
+      "selected": true,
+      "virtual_hid_keyboard": { "keyboard_type_v2": "ansi" },
+      "devices": [
+        {
+          "identifiers": { "is_keyboard": true, "vendor_id": 5426, "product_id": 579 },
+          "simple_modifications": [
+            { "from": { "key_code": "left_command" }, "to": [{ "key_code": "left_option" }] },
+            { "from": { "key_code": "left_option" }, "to": [{ "key_code": "left_command" }] },
+            { "from": { "key_code": "right_command" }, "to": [{ "key_code": "right_option" }] },
+            { "from": { "key_code": "right_option" }, "to": [{ "key_code": "right_command" }] }
+          ],
+          "fn_function_keys": [
+            { "from": { "key_code": "f1" }, "to": [{ "key_code": "f1" }] },
+            { "from": { "key_code": "f2" }, "to": [{ "key_code": "f2" }] },
+            { "from": { "key_code": "f3" }, "to": [{ "key_code": "f3" }] },
+            { "from": { "key_code": "f4" }, "to": [{ "key_code": "f4" }] },
+            { "from": { "key_code": "f5" }, "to": [{ "key_code": "f5" }] },
+            { "from": { "key_code": "f6" }, "to": [{ "key_code": "f6" }] },
+            { "from": { "key_code": "f7" }, "to": [{ "key_code": "f7" }] },
+            { "from": { "key_code": "f8" }, "to": [{ "key_code": "f8" }] },
+            { "from": { "key_code": "f9" }, "to": [{ "key_code": "f9" }] },
+            { "from": { "key_code": "f10" }, "to": [{ "key_code": "f10" }] },
+            { "from": { "key_code": "f11" }, "to": [{ "key_code": "f11" }] },
+            { "from": { "key_code": "f12" }, "to": [{ "key_code": "f12" }] }
+          ]
+        }
+      ],
+      "complex_modifications": {
+        "rules": [
+          {
+            "description": "Finder like Thunar: Ctrl+L types a path, Ctrl+Shift+C copies the path, Ctrl+H shows hidden files, F2 renames, Delete moves to Trash",
+            "manipulators": [
+              { "type": "basic", "from": { "key_code": "c", "modifiers": { "mandatory": ["control", "shift"] } }, "to": [{ "key_code": "c", "modifiers": ["left_command", "left_option"] }], "conditions": [{ "type": "frontmost_application_if", "bundle_identifiers": ["^com\\.apple\\.finder$"] }] },
+              { "type": "basic", "from": { "key_code": "l", "modifiers": { "mandatory": ["control"] } }, "to": [{ "key_code": "g", "modifiers": ["left_command", "left_shift"] }], "conditions": [{ "type": "frontmost_application_if", "bundle_identifiers": ["^com\\.apple\\.finder$"] }] },
+              { "type": "basic", "from": { "key_code": "h", "modifiers": { "mandatory": ["control"] } }, "to": [{ "key_code": "period", "modifiers": ["left_command", "left_shift"] }], "conditions": [{ "type": "frontmost_application_if", "bundle_identifiers": ["^com\\.apple\\.finder$"] }] },
+              { "type": "basic", "from": { "key_code": "x", "modifiers": { "mandatory": ["control"] } }, "to": [{ "key_code": "c", "modifiers": ["left_command"] }, { "set_variable": { "name": "finder_cut", "value": 1 } }], "conditions": [{ "type": "frontmost_application_if", "bundle_identifiers": ["^com\\.apple\\.finder$"] }] },
+              { "type": "basic", "from": { "key_code": "c", "modifiers": { "mandatory": ["control"] } }, "to": [{ "key_code": "c", "modifiers": ["left_command"] }, { "set_variable": { "name": "finder_cut", "value": 0 } }], "conditions": [{ "type": "frontmost_application_if", "bundle_identifiers": ["^com\\.apple\\.finder$"] }] },
+              { "type": "basic", "from": { "key_code": "v", "modifiers": { "mandatory": ["control"] } }, "to": [{ "key_code": "v", "modifiers": ["left_command", "left_option"] }, { "set_variable": { "name": "finder_cut", "value": 0 } }], "conditions": [{ "type": "frontmost_application_if", "bundle_identifiers": ["^com\\.apple\\.finder$"] }, { "type": "variable_if", "name": "finder_cut", "value": 1 }] },
+              { "type": "basic", "from": { "key_code": "f2" }, "to": [{ "key_code": "return_or_enter" }], "conditions": [{ "type": "frontmost_application_if", "bundle_identifiers": ["^com\\.apple\\.finder$"] }] },
+              { "type": "basic", "from": { "key_code": "delete_forward" }, "to": [{ "key_code": "delete_or_backspace", "modifiers": ["left_command"] }], "conditions": [{ "type": "frontmost_application_if", "bundle_identifiers": ["^com\\.apple\\.finder$"] }] }
+            ]
+          },
+          {
+            "description": "Linux-style Ctrl shortcuts (copy, paste, undo, save, find, tabs...) everywhere except terminals and Thunar (it reads raw Ctrl itself)",
+            "manipulators": [
+              { "type": "basic", "from": { "key_code": "a", "modifiers": { "mandatory": ["control"], "optional": ["shift"] } }, "to": [{ "key_code": "a", "modifiers": ["left_command"] }], "conditions": [{ "type": "frontmost_application_unless", "bundle_identifiers": ["^net\\.kovidgoyal\\.kitty$", "^com\\.apple\\.Terminal$", "^local\\.snes\\.thunar-mac$"] }] },
+              { "type": "basic", "from": { "key_code": "c", "modifiers": { "mandatory": ["control"], "optional": ["shift"] } }, "to": [{ "key_code": "c", "modifiers": ["left_command"] }], "conditions": [{ "type": "frontmost_application_unless", "bundle_identifiers": ["^net\\.kovidgoyal\\.kitty$", "^com\\.apple\\.Terminal$", "^local\\.snes\\.thunar-mac$"] }] },
+              { "type": "basic", "from": { "key_code": "v", "modifiers": { "mandatory": ["control"], "optional": ["shift"] } }, "to": [{ "key_code": "v", "modifiers": ["left_command"] }], "conditions": [{ "type": "frontmost_application_unless", "bundle_identifiers": ["^net\\.kovidgoyal\\.kitty$", "^com\\.apple\\.Terminal$", "^local\\.snes\\.thunar-mac$"] }] },
+              { "type": "basic", "from": { "key_code": "x", "modifiers": { "mandatory": ["control"], "optional": ["shift"] } }, "to": [{ "key_code": "x", "modifiers": ["left_command"] }], "conditions": [{ "type": "frontmost_application_unless", "bundle_identifiers": ["^net\\.kovidgoyal\\.kitty$", "^com\\.apple\\.Terminal$", "^local\\.snes\\.thunar-mac$"] }] },
+              { "type": "basic", "from": { "key_code": "z", "modifiers": { "mandatory": ["control"], "optional": ["shift"] } }, "to": [{ "key_code": "z", "modifiers": ["left_command"] }], "conditions": [{ "type": "frontmost_application_unless", "bundle_identifiers": ["^net\\.kovidgoyal\\.kitty$", "^com\\.apple\\.Terminal$", "^local\\.snes\\.thunar-mac$"] }] },
+              { "type": "basic", "from": { "key_code": "y", "modifiers": { "mandatory": ["control"] } }, "to": [{ "key_code": "z", "modifiers": ["left_command", "left_shift"] }], "conditions": [{ "type": "frontmost_application_unless", "bundle_identifiers": ["^net\\.kovidgoyal\\.kitty$", "^com\\.apple\\.Terminal$", "^local\\.snes\\.thunar-mac$"] }] },
+              { "type": "basic", "from": { "key_code": "s", "modifiers": { "mandatory": ["control"], "optional": ["shift"] } }, "to": [{ "key_code": "s", "modifiers": ["left_command"] }], "conditions": [{ "type": "frontmost_application_unless", "bundle_identifiers": ["^net\\.kovidgoyal\\.kitty$", "^com\\.apple\\.Terminal$", "^local\\.snes\\.thunar-mac$"] }] },
+              { "type": "basic", "from": { "key_code": "f", "modifiers": { "mandatory": ["control"], "optional": ["shift"] } }, "to": [{ "key_code": "f", "modifiers": ["left_command"] }], "conditions": [{ "type": "frontmost_application_unless", "bundle_identifiers": ["^net\\.kovidgoyal\\.kitty$", "^com\\.apple\\.Terminal$", "^local\\.snes\\.thunar-mac$"] }] },
+              { "type": "basic", "from": { "key_code": "t", "modifiers": { "mandatory": ["control"], "optional": ["shift"] } }, "to": [{ "key_code": "t", "modifiers": ["left_command"] }], "conditions": [{ "type": "frontmost_application_unless", "bundle_identifiers": ["^net\\.kovidgoyal\\.kitty$", "^com\\.apple\\.Terminal$", "^local\\.snes\\.thunar-mac$"] }] },
+              { "type": "basic", "from": { "key_code": "w", "modifiers": { "mandatory": ["control"], "optional": ["shift"] } }, "to": [{ "key_code": "w", "modifiers": ["left_command"] }], "conditions": [{ "type": "frontmost_application_unless", "bundle_identifiers": ["^net\\.kovidgoyal\\.kitty$", "^com\\.apple\\.Terminal$", "^local\\.snes\\.thunar-mac$"] }] },
+              { "type": "basic", "from": { "key_code": "n", "modifiers": { "mandatory": ["control"], "optional": ["shift"] } }, "to": [{ "key_code": "n", "modifiers": ["left_command"] }], "conditions": [{ "type": "frontmost_application_unless", "bundle_identifiers": ["^net\\.kovidgoyal\\.kitty$", "^com\\.apple\\.Terminal$", "^local\\.snes\\.thunar-mac$"] }] },
+              { "type": "basic", "from": { "key_code": "o", "modifiers": { "mandatory": ["control"], "optional": ["shift"] } }, "to": [{ "key_code": "o", "modifiers": ["left_command"] }], "conditions": [{ "type": "frontmost_application_unless", "bundle_identifiers": ["^net\\.kovidgoyal\\.kitty$", "^com\\.apple\\.Terminal$", "^local\\.snes\\.thunar-mac$"] }] },
+              { "type": "basic", "from": { "key_code": "p", "modifiers": { "mandatory": ["control"], "optional": ["shift"] } }, "to": [{ "key_code": "p", "modifiers": ["left_command"] }], "conditions": [{ "type": "frontmost_application_unless", "bundle_identifiers": ["^net\\.kovidgoyal\\.kitty$", "^com\\.apple\\.Terminal$", "^local\\.snes\\.thunar-mac$"] }] },
+              { "type": "basic", "from": { "key_code": "r", "modifiers": { "mandatory": ["control"], "optional": ["shift"] } }, "to": [{ "key_code": "r", "modifiers": ["left_command"] }], "conditions": [{ "type": "frontmost_application_unless", "bundle_identifiers": ["^net\\.kovidgoyal\\.kitty$", "^com\\.apple\\.Terminal$", "^local\\.snes\\.thunar-mac$"] }] },
+              { "type": "basic", "from": { "key_code": "l", "modifiers": { "mandatory": ["control"], "optional": ["shift"] } }, "to": [{ "key_code": "l", "modifiers": ["left_command"] }], "conditions": [{ "type": "frontmost_application_unless", "bundle_identifiers": ["^net\\.kovidgoyal\\.kitty$", "^com\\.apple\\.Terminal$", "^local\\.snes\\.thunar-mac$"] }] },
+              { "type": "basic", "from": { "key_code": "q", "modifiers": { "mandatory": ["control"], "optional": ["shift"] } }, "to": [{ "key_code": "q", "modifiers": ["left_command"] }], "conditions": [{ "type": "frontmost_application_unless", "bundle_identifiers": ["^net\\.kovidgoyal\\.kitty$", "^com\\.apple\\.Terminal$", "^local\\.snes\\.thunar-mac$"] }] },
+              { "type": "basic", "from": { "key_code": "equal_sign", "modifiers": { "mandatory": ["control"], "optional": ["shift"] } }, "to": [{ "key_code": "equal_sign", "modifiers": ["left_command"] }], "conditions": [{ "type": "frontmost_application_unless", "bundle_identifiers": ["^net\\.kovidgoyal\\.kitty$", "^com\\.apple\\.Terminal$", "^local\\.snes\\.thunar-mac$"] }] },
+              { "type": "basic", "from": { "key_code": "hyphen", "modifiers": { "mandatory": ["control"] } }, "to": [{ "key_code": "hyphen", "modifiers": ["left_command"] }], "conditions": [{ "type": "frontmost_application_unless", "bundle_identifiers": ["^net\\.kovidgoyal\\.kitty$", "^com\\.apple\\.Terminal$", "^local\\.snes\\.thunar-mac$"] }] },
+              { "type": "basic", "from": { "key_code": "0", "modifiers": { "mandatory": ["control"] } }, "to": [{ "key_code": "0", "modifiers": ["left_command"] }], "conditions": [{ "type": "frontmost_application_unless", "bundle_identifiers": ["^net\\.kovidgoyal\\.kitty$", "^com\\.apple\\.Terminal$", "^local\\.snes\\.thunar-mac$"] }] }
+            ]
+          },
+          {
+            "description": "Screenshots to clipboard: PrtScr selects an area, Win+PrtScr takes the full screen; Shift+PrtScr saves an area to a file",
+            "manipulators": [
+              { "type": "basic", "from": { "key_code": "print_screen", "modifiers": { "mandatory": ["option"] } }, "to": [{ "key_code": "3", "modifiers": ["left_command", "left_shift", "left_control"] }] },
+              { "type": "basic", "from": { "key_code": "print_screen", "modifiers": { "mandatory": ["shift"] } }, "to": [{ "key_code": "4", "modifiers": ["left_command", "left_shift"] }] },
+              { "type": "basic", "from": { "key_code": "print_screen" }, "to": [{ "key_code": "4", "modifiers": ["left_command", "left_shift", "left_control"] }] }
+            ]
+          },
+          {
+            "description": "Linux-style text navigation: Ctrl+arrows jump words, Home/End go to line start/end, Ctrl+Backspace deletes a word (not in terminals or Thunar)",
+            "manipulators": [
+              { "type": "basic", "from": { "key_code": "left_arrow", "modifiers": { "mandatory": ["control"], "optional": ["shift"] } }, "to": [{ "key_code": "left_arrow", "modifiers": ["left_option"] }], "conditions": [{ "type": "frontmost_application_unless", "bundle_identifiers": ["^net\\.kovidgoyal\\.kitty$", "^com\\.apple\\.Terminal$", "^local\\.snes\\.thunar-mac$"] }] },
+              { "type": "basic", "from": { "key_code": "right_arrow", "modifiers": { "mandatory": ["control"], "optional": ["shift"] } }, "to": [{ "key_code": "right_arrow", "modifiers": ["left_option"] }], "conditions": [{ "type": "frontmost_application_unless", "bundle_identifiers": ["^net\\.kovidgoyal\\.kitty$", "^com\\.apple\\.Terminal$", "^local\\.snes\\.thunar-mac$"] }] },
+              { "type": "basic", "from": { "key_code": "delete_or_backspace", "modifiers": { "mandatory": ["control"] } }, "to": [{ "key_code": "delete_or_backspace", "modifiers": ["left_option"] }], "conditions": [{ "type": "frontmost_application_unless", "bundle_identifiers": ["^net\\.kovidgoyal\\.kitty$", "^com\\.apple\\.Terminal$", "^local\\.snes\\.thunar-mac$"] }] },
+              { "type": "basic", "from": { "key_code": "home", "modifiers": { "mandatory": ["control"], "optional": ["shift"] } }, "to": [{ "key_code": "up_arrow", "modifiers": ["left_command"] }], "conditions": [{ "type": "frontmost_application_unless", "bundle_identifiers": ["^net\\.kovidgoyal\\.kitty$", "^com\\.apple\\.Terminal$", "^local\\.snes\\.thunar-mac$"] }] },
+              { "type": "basic", "from": { "key_code": "end", "modifiers": { "mandatory": ["control"], "optional": ["shift"] } }, "to": [{ "key_code": "down_arrow", "modifiers": ["left_command"] }], "conditions": [{ "type": "frontmost_application_unless", "bundle_identifiers": ["^net\\.kovidgoyal\\.kitty$", "^com\\.apple\\.Terminal$", "^local\\.snes\\.thunar-mac$"] }] },
+              { "type": "basic", "from": { "key_code": "home", "modifiers": { "optional": ["shift"] } }, "to": [{ "key_code": "left_arrow", "modifiers": ["left_command"] }], "conditions": [{ "type": "frontmost_application_unless", "bundle_identifiers": ["^net\\.kovidgoyal\\.kitty$", "^com\\.apple\\.Terminal$", "^local\\.snes\\.thunar-mac$"] }] },
+              { "type": "basic", "from": { "key_code": "end", "modifiers": { "optional": ["shift"] } }, "to": [{ "key_code": "right_arrow", "modifiers": ["left_command"] }], "conditions": [{ "type": "frontmost_application_unless", "bundle_identifiers": ["^net\\.kovidgoyal\\.kitty$", "^com\\.apple\\.Terminal$", "^local\\.snes\\.thunar-mac$"] }] }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

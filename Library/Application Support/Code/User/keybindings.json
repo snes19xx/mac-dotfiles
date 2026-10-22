@@ -1,0 +1,10 @@
+[
+  // Karabiner turns Ctrl+C into Cmd+C. In the built-in terminal, send a real
+  // Ctrl+C (interrupt) unless text is selected, so it still copies a selection.
+  {
+    "key": "cmd+c",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": { "text": "\u0003" },
+    "when": "terminalFocus && !terminalTextSelected"
+  }
+]
