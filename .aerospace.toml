@@ -30,7 +30,7 @@ run = 'layout floating'
 [mode.main.binding]
 # Launchers, as on Hyprland
 alt-q = 'exec-and-forget /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~'
-alt-e = 'exec-and-forget open -a /Applications/Thunar.app ~'
+alt-e = 'exec-and-forget open -a /Applications/Thunarx.app ~'
 alt-b = 'exec-and-forget open -a Firefox'
 
 # Close the focused window
